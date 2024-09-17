@@ -179,7 +179,7 @@ contract DCAOrderBotTest is BotTestHelper {
         dcaOrder.account = address(creditAccount);
         dcaOrder.tokenIn = address(usdc);
         dcaOrder.tokenOut = address(weth);
-        dcaOrder.amountPerInterval = 200_000e6;
+        dcaOrder.amountPerInterval = 40_000e6;
         dcaOrder.interval = 1 days;
         dcaOrder.nextExecutionTime = block.timestamp;
         dcaOrder.executionsLeft = 5;
@@ -189,7 +189,7 @@ contract DCAOrderBotTest is BotTestHelper {
         uint256 ONE = 10 ** IERC20Metadata(dcaOrder.tokenIn).decimals();
         uint256 price = IPriceOracleV3(creditManager.priceOracle()).convert(ONE, dcaOrder.tokenIn, dcaOrder.tokenOut);
        
-        uint256 wethAmount = (150_000e6 - 1) * price / 1e6;
+        uint256 wethAmount = 40_000e6 * price / 1e6;
         deal({token: address(weth), to: executor, give: wethAmount});
         vm.prank(executor);
         weth.approve(address(bot), wethAmount);
@@ -201,7 +201,7 @@ contract DCAOrderBotTest is BotTestHelper {
 
         _assertDCAOrderHasRemainingExecutions(orderId, 4);
 
-        assertEq(usdc.balanceOf(executor), 150_000e6/4-1, "Incorrect executor USDC balance");
+        assertEq(usdc.balanceOf(executor), 40_000e6, "Incorrect executor USDC balance");
         assertEq(weth.balanceOf(address(creditAccount)), wethAmount, "Incorrect account WETH balance");
     }
 

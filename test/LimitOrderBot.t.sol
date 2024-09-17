@@ -31,7 +31,7 @@ contract LimitOrderBotTest is BotTestHelper {
         user = makeAddr("USER");
         executor = makeAddr("EXECUTOR");
 
-        setUpGearbox("Trade USDC -> Crypto v3");
+        setUpGearbox("Trade USDC Tier 1");
 
         creditAccount = openCreditAccount(user, 50_000e6, 100_000e6);
 
